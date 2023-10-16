@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Birb : MonoBehaviour
 {
@@ -66,7 +67,8 @@ public class Birb : MonoBehaviour
 
     public void Launch(Vector3 offset, float maximumStretch, Rigidbody2D rigidbody)
     {
-        
+        Vector2 launchVector = -offset / maximumStretch; // divide by max stretch to rescale offset to have a magnitude between 0 and 1
+        Vector2 instantaneousVelocity = launchVector * LaunchForce; // scale by launch force
+        rigidbody.AddForce(instantaneousVelocity, ForceMode2D.Impulse);
     }
-
 }
