@@ -8,7 +8,6 @@ public class AirSpecialExplode : MonoBehaviour, IAirSpecial
 
     private List<Collider2D> targetColliders = new List<Collider2D>();
 
-
     public void Start()
     {
         // collider setup

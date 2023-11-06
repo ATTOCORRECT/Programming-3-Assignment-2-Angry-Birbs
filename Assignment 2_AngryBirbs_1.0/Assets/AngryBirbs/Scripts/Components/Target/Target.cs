@@ -9,7 +9,16 @@ public class Target : MonoBehaviour
 
     private void OnCollisionEnter2D( Collision2D collision )
     {
-        throw new System.NotImplementedException();
+        if (LayerMask.LayerToName(collision.gameObject.layer) == "Birb") // if its of the layer "Birb"
+        {
+            
+            Rigidbody2D birbRigidBody = collision.gameObject.GetComponent<Rigidbody2D>(); // get rigid body
+
+            if (birbRigidBody.velocity.magnitude >= MinimumBreakSpeed) // compare speed
+            {
+                DestroyTarget(); 
+            }
+        }
     }
 
     public void DestroyTarget()
