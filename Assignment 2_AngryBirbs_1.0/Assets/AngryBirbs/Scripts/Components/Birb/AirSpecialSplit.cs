@@ -7,25 +7,25 @@ public class AirSpecialSplit : MonoBehaviour, IAirSpecial
     public void ExecuteAirSpecial()
     {
         //copies
-        GameObject BirbUp = Birb.MakeBirbCopy(gameObject);
+        GameObject BirbUp   = Birb.MakeBirbCopy(gameObject);
         GameObject BirbDown = Birb.MakeBirbCopy(gameObject);
 
         //rigid bodies
         Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        Rigidbody2D rigidbodyBirdUp = BirbUp.GetComponent<Rigidbody2D>();
+        Rigidbody2D rigidbodyBirdUp   = BirbUp  .GetComponent<Rigidbody2D>();
         Rigidbody2D rigidbodyBirdDown = BirbDown.GetComponent<Rigidbody2D>();
 
         //enable phys simulation
-        rigidbodyBirdUp.simulated = true;
+        rigidbodyBirdUp  .simulated = true;
         rigidbodyBirdDown.simulated = true;
 
         //rotate original velocity for the copies
         Vector2 originalVelocity = rigidbody.velocity;
-        Vector2 velocityUp = RotateVector2D(SplitAngleInDegrees, originalVelocity);
+        Vector2 velocityUp   = RotateVector2D( SplitAngleInDegrees, originalVelocity);
         Vector2 velocityDown = RotateVector2D(-SplitAngleInDegrees, originalVelocity);
 
         //add velocities as an impulse to the copies
-        rigidbodyBirdUp.AddForce(velocityUp, ForceMode2D.Impulse);
+        rigidbodyBirdUp  .AddForce(velocityUp,   ForceMode2D.Impulse);
         rigidbodyBirdDown.AddForce(velocityDown, ForceMode2D.Impulse);
 
     }
