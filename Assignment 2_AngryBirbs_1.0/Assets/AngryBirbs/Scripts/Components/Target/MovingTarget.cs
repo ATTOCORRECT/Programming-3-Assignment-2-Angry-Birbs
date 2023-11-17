@@ -9,30 +9,29 @@ public class MovingTarget : MonoBehaviour
     [Range( 0, 5 )]
     public float MovementSpeed = 2;
 
-    Vector2 velocity;
     Vector2 startPosition;
+    Rigidbody2D rigidbody;
 
     private void Start()
     {
-        velocity = new Vector2(0, MovementSpeed);
-        startPosition = gameObject.GetComponent<Rigidbody2D>().position;
+        rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        startPosition = rigidbody.position;
+        rigidbody.velocity = Vector2.up * MovementSpeed; // initial upward velocity
     }
     private void FixedUpdate()
     {
-        Vector2 relativePosition = gameObject.GetComponent<Rigidbody2D>().position - startPosition;
+        Vector2 relativePosition = rigidbody.position - startPosition; // position relative to the starting position
 
-        if (relativePosition.y > HalfPathDistance)
+        if (relativePosition.y > HalfPathDistance) // if higher than half path
         {
-            velocity *= -1;
-            gameObject.GetComponent<Rigidbody2D>().position = new Vector2(0, HalfPathDistance) + startPosition;
+            rigidbody.velocity = Vector2.down * MovementSpeed; // go down
+            rigidbody.position = Vector2.up * HalfPathDistance + startPosition; // snap to higher position
         }
 
-        if (relativePosition.y < -HalfPathDistance)
+        if (relativePosition.y < -HalfPathDistance) // if lower than negative half path
         {
-            velocity *= -1;
-            gameObject.GetComponent<Rigidbody2D>().position = new Vector2(0, -HalfPathDistance) + startPosition;
+            rigidbody.velocity = Vector2.up * MovementSpeed; // go up
+            rigidbody.position = Vector2.down * HalfPathDistance + startPosition; // snap to lower position
         }
-
-        gameObject.GetComponent<Rigidbody2D>().position += velocity * Time.fixedDeltaTime;
     }
 }

@@ -11,10 +11,9 @@ public class Target : MonoBehaviour
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "Birb") // if its of the layer "Birb"
         {
-            
-            Rigidbody2D birbRigidBody = collision.gameObject.GetComponent<Rigidbody2D>(); // get rigid body
+            Debug.Log(collision.relativeVelocity.magnitude);
 
-            if (birbRigidBody.velocity.magnitude >= MinimumBreakSpeed) // compare speed
+            if (collision.relativeVelocity.magnitude >= MinimumBreakSpeed) // and relative speed is less than minimum break
             {
                 DestroyTarget(); 
             }
@@ -23,6 +22,6 @@ public class Target : MonoBehaviour
 
     public void DestroyTarget()
     {
-        Destroy( gameObject );
+        Destroy(gameObject);
     }
 }

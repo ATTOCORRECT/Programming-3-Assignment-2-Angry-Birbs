@@ -6,7 +6,7 @@ public class AirSpecialExplode : MonoBehaviour, IAirSpecial
     [Range( 0, 5 )]
     public float BlastRadius = 2;
 
-    private List<Collider2D> targetColliders = new List<Collider2D>();
+    private List<Collider2D> collidersWithinExplosion = new List<Collider2D>();
 
     public void Start()
     {
@@ -18,19 +18,19 @@ public class AirSpecialExplode : MonoBehaviour, IAirSpecial
 
     public void ExecuteAirSpecial()
     {
-        for ( int i = 0; i < targetColliders.Count; i++ ) // destroy all objects currently in the list
+        for ( int i = 0; i < collidersWithinExplosion.Count; i++ ) // destroy all objects currently in the list
         {
-            targetColliders[i].gameObject.GetComponent<Target>().DestroyTarget();
+            collidersWithinExplosion[i].gameObject.GetComponent<Target>().DestroyTarget();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) // on enter
     {
-        if (LayerMask.LayerToName(collision.gameObject.layer) == "Target") // if its of the layer "Target"
-        {
-            if (!targetColliders.Contains(collision)) // and isnt already in the list
+        if (LayerMask.LayerToName(collision.gameObject.layer) == "Target") // if its of the layer "Target" 
+        { 
+            if (!collidersWithinExplosion.Contains(collision)) // and isnt already in the list
             {
-                targetColliders.Add(collision); // add to list
+                collidersWithinExplosion.Add(collision); // add to list
             }
         }
     }
@@ -39,7 +39,7 @@ public class AirSpecialExplode : MonoBehaviour, IAirSpecial
     {
         if (LayerMask.LayerToName(collision.gameObject.layer) == "Target") // if its of the layer "Target"
         {
-            targetColliders.Remove(collision); // remove from list
+            collidersWithinExplosion.Remove(collision); // remove from list
         }
     }
 }
